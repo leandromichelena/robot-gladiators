@@ -123,6 +123,17 @@ var startGame = function() {
     
             // Pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter 
             fight(pickedEnemyName);
+
+            // If we're not at the last enemy in the array
+            if (i < enemyNames.length - 1) {
+                // ask player if they want to visit the store before next round
+                var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+
+                // if yes, take them to the store() function
+                if (storeConfirm) {
+                    shop();
+                };
+            }
         }
         else {
             window.alert("You have lost your robot in battle. Game over!");
@@ -154,6 +165,51 @@ var endGame = function() {
     }
     else {
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+    }
+};
+
+// Function to add the possibility to buy health or attack points
+var shop = function() {
+    // ask player what they'd like to do
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFIL', 'UPGRADE', or 'LEAVE' to make a choice.") 
+    // Use switch to carry out functions
+    switch (shopOptionPrompt) {
+        case "REFILL": // new case (equivalent to || or operator)
+        case "refill":
+            if (playerMoney >=7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+            break;
+        
+        case "UPGRADE": // new case
+        case "upgrade":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money!");
+            }
+            break;
+
+        case "LEAVE": // new case
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+        
+        default: // user didn't reply with any of the previous cases
+            window.alert("You did not pick a valid option. Try again.");
+            shop();
+            break;
     }
 };
 
